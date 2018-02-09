@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMMORPG", "StudyMMORPG.csproj", "{8C269843-B3E1-F9F7-B608-83A1254EA47E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyMMORPG.Editor", "StudyMMORPG.Editor.csproj", "{F9F15CEF-68CE-0A14-E9BA-3C916DE147F8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C269843-B3E1-F9F7-B608-83A1254EA47E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C269843-B3E1-F9F7-B608-83A1254EA47E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C269843-B3E1-F9F7-B608-83A1254EA47E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C269843-B3E1-F9F7-B608-83A1254EA47E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9F15CEF-68CE-0A14-E9BA-3C916DE147F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9F15CEF-68CE-0A14-E9BA-3C916DE147F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9F15CEF-68CE-0A14-E9BA-3C916DE147F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9F15CEF-68CE-0A14-E9BA-3C916DE147F8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
