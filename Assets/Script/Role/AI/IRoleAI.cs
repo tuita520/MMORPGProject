@@ -7,15 +7,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class IRoleAI : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+/// <summary>
+/// 角色AI接口
+/// </summary>
+public interface IRoleAI {
+    /// <summary>
+    /// 执行AI
+    /// </summary>
+    void DoAI();
 }

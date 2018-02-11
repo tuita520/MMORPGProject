@@ -6,16 +6,15 @@
 // ========================================================
 using UnityEngine;
 using System.Collections;
+using System;
 
-public class RoleMainPlayerCityAI : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+/// <summary>
+/// 主角主城AI
+/// </summary>
+public class RoleMainPlayerCityAI : IRoleAI
+{
+    public void DoAI()
+    {
+        //执行AI
+    }
 }

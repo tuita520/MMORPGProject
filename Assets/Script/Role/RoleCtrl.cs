@@ -22,6 +22,38 @@ public class RoleCtrl : MonoBehaviour
     //转身速度
     private float m_RosSpeed = 10f;
 
+
+    /// <summary>
+    /// 当前角色类型
+    /// </summary>
+    public RoleType CurrRoleType = RoleType.None;
+    /// <summary>
+    /// 当前角色信息
+    /// </summary>
+    public RoleInfoBase CurrRoleInfo = null;
+    /// <summary>
+    /// 当前角色AI
+    /// </summary>
+    public IRoleAI CurrRoleAI = null;
+    /// <summary>
+    /// 当前角色有限状态机管理器
+    /// </summary>
+    public RoleFSMMgr currRoleFSMMgr = null;
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    /// <param name="roleType">角色类型</param>
+    /// <param name="roleInfo">角色信息</param>
+    /// <param name="ai">AI</param>
+    public void Init(RoleType roleType,RoleInfoBase roleInfo,IRoleAI ai)
+    {
+        CurrRoleType = roleType;
+        CurrRoleInfo = roleInfo;
+        CurrRoleAI = ai;
+    }
+
+
     #region Start 组件初始化
     /// <summary>
     /// 组件初始化
@@ -34,9 +66,15 @@ public class RoleCtrl : MonoBehaviour
             CameraCtr.Instance.Init();
         }
 
-        FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
-        FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
-        FingerEvent.Instance.OnZoom += OnZoom;
+        currRoleFSMMgr = new RoleFSMMgr(this);
+
+        if(FingerEvent.Instance != null)
+        {
+            FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
+            FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
+            FingerEvent.Instance.OnZoom += OnZoom;
+        }
+        
     }
     #endregion
 
@@ -125,6 +163,10 @@ public class RoleCtrl : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //如果角色没有AI 直接返回
+        if (CurrRoleAI == null) return;
+        //执行AI方法
+        CurrRoleAI.DoAI();
 
         if (m_CharacterController == null) return;
 

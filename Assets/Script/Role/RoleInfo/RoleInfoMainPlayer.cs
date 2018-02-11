@@ -7,15 +7,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class RoleInfoMainPlayer : MonoBehaviour {
+/// <summary>
+/// 主角信息
+/// </summary>
+public class RoleInfoMainPlayer : RoleInfoBase {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

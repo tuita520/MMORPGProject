@@ -6,16 +6,15 @@
 // ========================================================
 using UnityEngine;
 using System.Collections;
+using System;
 
-public class RoleMonsterAI : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+/// <summary>
+/// 怪AI
+/// </summary>
+public class RoleMonsterAI : IRoleAI
+{
+    public void DoAI()
+    {
+        //执行AI
+    }
 }

@@ -7,15 +7,23 @@
 using UnityEngine;
 using System.Collections;
 
-public class RoleFSMMgr : MonoBehaviour {
+/// <summary>
+/// 角色有限状态机管理器
+/// </summary>
+public class RoleFSMMgr {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    /// <summary>
+    /// 当前角色控制器
+    /// </summary>
+    public RoleCtrl CurrRoleCtrl { get; private set; }
+
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="currRoleCtrl"></param>
+    public RoleFSMMgr(RoleCtrl currRoleCtrl)
+    {
+        CurrRoleCtrl = currRoleCtrl;
+    }
+
 }
