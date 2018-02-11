@@ -51,6 +51,12 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
                 case ResourceType.UIWindow:
                     sb.Append("UIPrefab/UIWindows/");
                      break;
+                case ResourceType.Role:
+                    sb.Append("RolePrefab/");
+                    break;
+                case ResourceType.Effect:
+                    sb.Append("EffectPrefab/");
+                    break;
             }
             sb.Append(path);
 
