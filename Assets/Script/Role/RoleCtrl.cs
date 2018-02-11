@@ -13,6 +13,13 @@ using System;
 /// </summary>
 public class RoleCtrl : MonoBehaviour
 {
+    #region 成员变量或属性
+    /// <summary>
+    /// 动画
+    /// </summary>
+    [SerializeField]
+    public Animator Animator;
+
     //移动速度
     private float m_Speed = 0.1f;
     //移动的目标位置
@@ -39,6 +46,7 @@ public class RoleCtrl : MonoBehaviour
     /// 当前角色有限状态机管理器
     /// </summary>
     public RoleFSMMgr currRoleFSMMgr = null;
+    #endregion
 
     /// <summary>
     /// 初始化
@@ -164,9 +172,16 @@ public class RoleCtrl : MonoBehaviour
     void Update()
     {
         //如果角色没有AI 直接返回
-        if (CurrRoleAI == null) return;
+        //if (CurrRoleAI == null) return;
+
+        //每帧执行
+        if(currRoleFSMMgr != null)
+        {
+            currRoleFSMMgr.OnUpdate();
+        }
+
         //执行AI方法
-        CurrRoleAI.DoAI();
+        //CurrRoleAI.DoAI();
 
         if (m_CharacterController == null) return;
 
@@ -201,7 +216,54 @@ public class RoleCtrl : MonoBehaviour
 
         //摄像机自动跟随
         CameraAutoFollow();
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            ToRun();
+        }else if (Input.GetKeyUp(KeyCode.N))
+        {
+            ToIdle();
+        }else if (Input.GetKeyUp(KeyCode.A))
+        {
+            ToAttack();
+        }
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            ToHurt();
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            ToDie();
+        }
     }
+    #endregion
+
+    #region 角色控制方法
+
+    public void ToIdle()
+    {
+        currRoleFSMMgr.ChangeState(RoleState.Idle);
+    }
+
+    public void ToRun()
+    {
+        currRoleFSMMgr.ChangeState(RoleState.Run);
+    }
+
+    public void ToAttack()
+    {
+        currRoleFSMMgr.ChangeState(RoleState.Attack);
+    }
+
+    public void ToHurt()
+    {
+        currRoleFSMMgr.ChangeState(RoleState.Hurt);
+    }
+    public void ToDie()
+    {
+        currRoleFSMMgr.ChangeState(RoleState.Die);
+    }
+
     #endregion
 
     #region CameraAutoFollow 摄像机自动跟随

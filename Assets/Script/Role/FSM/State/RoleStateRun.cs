@@ -7,15 +7,48 @@
 using UnityEngine;
 using System.Collections;
 
-public class RoleStateRun : MonoBehaviour {
+public class RoleStateRun : RoleStateAbstract
+{
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="roleFSMMgr">有限状态机管理器</param>
+    public RoleStateRun(RoleFSMMgr roleFSMMgr) : base(roleFSMMgr)
+    {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    /// <summary>
+    /// 实现基类进入状态
+    /// </summary>
+    public override void OnEnter()
+    {
+        base.OnEnter();
+        //播放待机的动画 从任意状态进入Idle状态并设置当前状态为Idle
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToRun.ToString(), true);
+
+
+    }
+
+    /// <summary>
+    /// 实现基类执行状态
+    /// </summary>
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+        CurrRoleAnimatorStateInfo = CurrRoleFSMMgr.CurrRoleCtrl.Animator.GetCurrentAnimatorStateInfo(0);
+        if (CurrRoleAnimatorStateInfo.IsName(RoleAnimatorName.Run.ToString()))
+        {
+            CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetInteger(ToAnimatorCondition.CurrState.ToString(), (int)RoleState.Run);
+        }
+    }
+
+    /// <summary>
+    /// 实现基类离开状态
+    /// </summary>
+    public override void OnLeave()
+    {
+        base.OnLeave();
+        CurrRoleFSMMgr.CurrRoleCtrl.Animator.SetBool(ToAnimatorCondition.ToRun.ToString(), false);
+    }
 }
