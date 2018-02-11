@@ -8,6 +8,9 @@ using UnityEngine;
 using System.Collections;
 using System;
 
+/// <summary>
+/// 角色控制器
+/// </summary>
 public class RoleCtrl : MonoBehaviour
 {
     //移动速度
@@ -19,6 +22,10 @@ public class RoleCtrl : MonoBehaviour
     //转身速度
     private float m_RosSpeed = 10f;
 
+    #region Start 组件初始化
+    /// <summary>
+    /// 组件初始化
+    /// </summary>
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
@@ -31,7 +38,13 @@ public class RoleCtrl : MonoBehaviour
         FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
         FingerEvent.Instance.OnZoom += OnZoom;
     }
+    #endregion
 
+    #region OnZoom 摄像机缩放
+    /// <summary>
+    /// 摄像机缩放
+    /// </summary>
+    /// <param name="obj"></param>
     private void OnZoom(FingerEvent.ZoomType obj)
     {
         switch (obj)
@@ -46,7 +59,9 @@ public class RoleCtrl : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region OnPlayerClickGround 鼠标点击地面
     /// <summary>
     /// 鼠标点击地面
     /// </summary>
@@ -63,7 +78,9 @@ public class RoleCtrl : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region OnFingerDrag 手指滑动
     /// <summary>
     /// 手指滑动
     /// </summary>
@@ -88,14 +105,24 @@ public class RoleCtrl : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region OnDestroy 销毁
+    /// <summary>
+    /// 销毁
+    /// </summary>
     private void OnDestroy()
     {
         FingerEvent.Instance.OnFingerDrag -= OnFingerDrag;
         FingerEvent.Instance.OnPlayerClickGround -= OnPlayerClickGround;
         FingerEvent.Instance.OnZoom -= OnZoom;
     }
+    #endregion
 
+    #region Update 角色移动
+    /// <summary>
+    /// 角色移动
+    /// </summary>
     void Update()
     {
 
@@ -133,7 +160,9 @@ public class RoleCtrl : MonoBehaviour
         //摄像机自动跟随
         CameraAutoFollow();
     }
+    #endregion
 
+    #region CameraAutoFollow 摄像机自动跟随
     /// <summary>
     /// 摄像机自动跟随
     /// </summary>
@@ -143,29 +172,6 @@ public class RoleCtrl : MonoBehaviour
 
         CameraCtr.Instance.transform.position = transform.position;
         CameraCtr.Instance.AutoLookAt(gameObject.transform.position);
-
-        //if (Input.GetKey(KeyCode.A))
-        //{
-        //    CameraCtr.Instance.SetCameraRotate(0);
-        //}else if (Input.GetKey(KeyCode.D))
-        //{
-        //    CameraCtr.Instance.SetCameraRotate(1);
-        //}
-        //if (Input.GetKey(KeyCode.W))
-        //{
-        //    CameraCtr.Instance.SetCameraUpAndDown(0);
-        //}
-        //else if (Input.GetKey(KeyCode.S))
-        //{
-        //    CameraCtr.Instance.SetCameraUpAndDown(1);
-        //}
-        //if (Input.GetKey(KeyCode.I))
-        //{
-        //    CameraCtr.Instance.SetCameraZoom(0);
-        //}
-        //else if (Input.GetKey(KeyCode.L))
-        //{
-        //    CameraCtr.Instance.SetCameraZoom(1);
-        //}
     }
+    #endregion
 }
