@@ -13,8 +13,6 @@ using System.Collections.Generic;
 /// </summary>
 public class RoleMgr : Singleton<RoleMgr> {
 
-    private Dictionary<string, GameObject> m_Role = new Dictionary<string, GameObject>();
-
     #region LoadPlayer 根据角色预设名称 克隆角色
     /// <summary>
     /// 根据角色预设名称 克隆角色
@@ -23,18 +21,7 @@ public class RoleMgr : Singleton<RoleMgr> {
     /// <returns></returns>
     public GameObject LoadPlayer(string name)
     {
-        GameObject obj = null;
-        if (m_Role.ContainsKey(name))
-        {
-            obj = m_Role[name];
-        }
-        else
-        {
-            obj = ResourcesMgr.Instance.Load(ResourcesMgr.ResourceType.Role, string.Format("Player/{0}", name), cache: true);
-            m_Role.Add(name, obj);
-        }
-        
-        return obj;
+        return ResourcesMgr.Instance.Load(ResourcesMgr.ResourceType.Role, string.Format("Player/{0}", name), cache: true);
     }
     #endregion
 
@@ -43,7 +30,5 @@ public class RoleMgr : Singleton<RoleMgr> {
     /// </summary>
     public override void Dispose()
     {
-        m_Role.Clear();
-
     }
 }
