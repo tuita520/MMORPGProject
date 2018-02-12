@@ -19,7 +19,9 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
         //角色
         Role,
         //特效
-        Effect
+        Effect,
+        //其他
+        UIOther
     }
 
     //预设列表
@@ -56,6 +58,9 @@ public class ResourcesMgr : Singleton<ResourcesMgr>
                     break;
                 case ResourceType.Effect:
                     sb.Append("EffectPrefab/");
+                    break;
+                case ResourceType.UIOther:
+                    sb.Append("UIPrefab/UIOther");
                     break;
             }
             sb.Append(path);

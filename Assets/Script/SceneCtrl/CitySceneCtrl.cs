@@ -9,6 +9,12 @@ using System.Collections;
 
 public class CitySceneCtrl : MonoBehaviour {
 
+    /// <summary>
+    /// 主角出生点
+    /// </summary>
+    [SerializeField]
+    private Transform m_PlayerBornPos;
+
     void Awake()
     {
         SceneUIMgr.Instance.LoadSceneUI(SceneUIMgr.SceneUIType.MainCity);
@@ -18,7 +24,6 @@ public class CitySceneCtrl : MonoBehaviour {
 
         if (FingerEvent.Instance != null)
         {
-            Debug.Log("fingerEvent ");
             FingerEvent.Instance.OnFingerDrag += OnFingerDrag;
             FingerEvent.Instance.OnPlayerClickGround += OnPlayerClickGround;
             FingerEvent.Instance.OnZoom += OnZoom;
@@ -26,9 +31,11 @@ public class CitySceneCtrl : MonoBehaviour {
 
         //加载玩家
         GameObject obj = RoleMgr.Instance.LoadPlayer("Role_MainPlayer");
+
+        obj.transform.position = m_PlayerBornPos.position;
+
         GlobalInit.Instance.CurrPlayer = obj.GetComponent<RoleCtrl>();
         GlobalInit.Instance.CurrPlayer.Init(RoleType.MainPlayer,new RoleInfoBase(),new RoleMainPlayerCityAI());
-
     }
 
     #region OnZoom 摄像机缩放
@@ -64,10 +71,8 @@ public class CitySceneCtrl : MonoBehaviour {
         {
             if (hit.collider.gameObject.name.Equals("Ground"))
             {
-                Debug.Log("点击到了地面");
                 if(GlobalInit.Instance.CurrPlayer != null)
                 {
-                    Debug.Log("开始");
                     GlobalInit.Instance.CurrPlayer.MoveTo(hit.point);
                 }
             }

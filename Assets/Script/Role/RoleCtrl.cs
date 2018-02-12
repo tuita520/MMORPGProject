@@ -15,6 +15,16 @@ public class RoleCtrl : MonoBehaviour
 {
     #region 成员变量或属性
     /// <summary>
+    /// 昵称挂载的地方
+    /// </summary>
+    [SerializeField]
+    private Transform m_HeadBarPos;
+
+    /// <summary>
+    /// 头顶UI
+    /// </summary>
+    private GameObject m_HeadBar;
+    /// <summary>
     /// 动画
     /// </summary>
     [SerializeField]
@@ -60,6 +70,18 @@ public class RoleCtrl : MonoBehaviour
         CurrRoleAI = ai;
     }
 
+    /// <summary>
+    /// 初始化角色头顶UI
+    /// </summary>
+    private void InitTitleBar()
+    {
+        //加载预设
+        m_HeadBar = ResourcesMgr.Instance.Load(ResourcesMgr.ResourceType.UIOther,"RoleHeadBar");
+        //m_HeadBar.transform.parent = ;
+        //给预设赋值
+
+    }
+
     #region Start 组件初始化
     /// <summary>
     /// 组件初始化
@@ -71,12 +93,13 @@ public class RoleCtrl : MonoBehaviour
         {
             if (CameraCtr.Instance != null)
             {
-                Debug.Log("摄像机初始化");
                 CameraCtr.Instance.Init();
             }
         }
 
         currRoleFSMMgr = new RoleFSMMgr(this);
+
+        ToIdle();
     }
     #endregion
 
@@ -142,8 +165,6 @@ public class RoleCtrl : MonoBehaviour
 
     public void MoveTo(Vector3 targetPos)
     {
-        Debug.Log("进行移动");
-
         if (targetPos == Vector3.zero) return;
 
         TargetPos = targetPos;

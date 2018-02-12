@@ -72,8 +72,6 @@ public class RoleFSMMgr {
     {
         if (CurrRoleStateEnum == newState) return;
 
-        Debug.Log("改变状态");
-
         //调用以前状态的离开方法
         if(m_currRoleState != null)
             m_currRoleState.OnLeave();
