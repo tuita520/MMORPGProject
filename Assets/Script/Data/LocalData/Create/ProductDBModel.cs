@@ -12,7 +12,7 @@ using System;
 /// <summary>
 /// 商品数据管理
 /// </summary>
-public class ProductDBModel : AbstractDBModel<ProductDBModel, ProductEntity>
+public partial class ProductDBModel : AbstractDBModel<ProductDBModel, ProductEntity>
 {
     protected override string FileName{ get { return "Product.data"; } }
 

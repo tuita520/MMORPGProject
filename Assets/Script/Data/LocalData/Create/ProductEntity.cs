@@ -10,7 +10,7 @@ using System.Collections;
 /// <summary>
 /// 商品实体
 /// </summary>
-public class ProductEntity : AbstractEntity
+public partial class ProductEntity : AbstractEntity
 {
     /// <summary>
     /// 商品名称

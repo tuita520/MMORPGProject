@@ -73,6 +73,7 @@ public class TestMMOMemory : MonoBehaviour {
         {
             Debug.Log(entity.Name);
         }
+
     }
 }
 
