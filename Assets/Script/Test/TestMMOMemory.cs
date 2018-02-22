@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// 测试byte数组和其他类型数据的转换
@@ -33,28 +34,45 @@ public class TestMMOMemory : MonoBehaviour {
 
         //Debug.Log(BitConverter.ToInt32(arr2,0));
 
-        Item item = new Item() { ID = 1,Name = "测试"};
-        byte[] arr = null;
+        //Item item = new Item() { ID = 1,Name = "测试"};
+        //byte[] arr = null;
 
-        //将 类 转换成字节数组
-        using (MMO_MemoryStream ms = new MMO_MemoryStream())
+        ////将 类 转换成字节数组
+        //using (MMO_MemoryStream ms = new MMO_MemoryStream())
+        //{
+        //    ms.WriteInt(item.ID);
+        //    ms.WriteUTF8String(item.Name);
+
+        //    arr = ms.ToArray();
+        //};
+
+        //Item item2 = new Item();
+
+        //using (MMO_MemoryStream ms = new MMO_MemoryStream(arr))
+        //{
+        //    item2.ID = ms.ReadInt();
+        //    item2.Name = ms.ReadUTF8String();
+        //}
+
+        //Debug.Log(item2.ID);
+        //Debug.Log(item2.Name);
+
+        //测试获取商品本地数据表的所有数据
+        //List<ProductEntity> list = ProductDBModel.Instance.GetList();
+
+        //for (int i = 0; i < list.Count; i++)
+        //{
+        //    Debug.Log(list[i].Name);
+        //}
+
+        //Debug.Log(list.Count);
+
+        //测试获取商品本地数据表中某已条件下的商品
+        ProductEntity entity = ProductDBModel.Instance.Get(5);
+        if(entity != null)
         {
-            ms.WriteInt(item.ID);
-            ms.WriteUTF8String(item.Name);
-
-            arr = ms.ToArray();
-        };
-
-        Item item2 = new Item();
-
-        using (MMO_MemoryStream ms = new MMO_MemoryStream(arr))
-        {
-            item2.ID = ms.ReadInt();
-            item2.Name = ms.ReadUTF8String();
+            Debug.Log(entity.Name);
         }
-
-        Debug.Log(item2.ID);
-        Debug.Log(item2.Name);
     }
 }
 
