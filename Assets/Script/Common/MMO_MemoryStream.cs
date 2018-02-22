@@ -15,6 +15,10 @@ using System.Text;
 /// </summary>
 public class MMO_MemoryStream : MemoryStream {
 
+    public MMO_MemoryStream(){}
+
+    public MMO_MemoryStream(byte[] buffer) : base(buffer){}
+
     #region Short
 
     /// <summary>
@@ -262,6 +266,7 @@ public class MMO_MemoryStream : MemoryStream {
             throw new InvalidCastException("字符串超出范围");
         }
         WriteUShort((ushort)arr.Length);
+        base.Write(arr, 0, arr.Length);
     }
     #endregion
 
