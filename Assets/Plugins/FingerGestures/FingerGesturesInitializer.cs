@@ -34,8 +34,6 @@ public class FingerGesturesInitializer : MonoBehaviour
 				prefab = desktopGestures;
 #endif
 			}
-
-			Debug.Log( "Creating FingerGestures using " + prefab.name );
 			FingerGestures instance = Instantiate( prefab ) as FingerGestures;
 			instance.name = prefab.name;
 			
