@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using LitJson;
 
 /// <summary>
 /// 测试byte数组和其他类型数据的转换
@@ -68,12 +69,29 @@ public class TestMMOMemory : MonoBehaviour {
         //Debug.Log(list.Count);
 
         //测试获取商品本地数据表中某已条件下的商品
-        ProductEntity entity = ProductDBModel.Instance.Get(5);
-        if(entity != null)
-        {
-            Debug.Log(entity.Name);
-        }
+        //ProductEntity entity = ProductDBModel.Instance.Get(5);
+        //if(entity != null)
+        //{
+        //    Debug.Log(entity.Name);
+        //}
 
+        NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl+"api/account?id=100",CallBack);
+        Debug.Log("访问账号服务器URL "+ GlobalInit.WebAccountUrl + "api/account?id=100");
+    }
+
+    private void CallBack(NetWorkHttp.CallBackArgs obj)
+    {
+        Debug.Log(obj.Json);
+        if (obj.IsError)
+        {
+            Debug.Log("找不到用户");
+        }
+        else
+        {
+            AccountEntity entity = JsonMapper.ToObject<AccountEntity>(obj.Json);
+            Debug.Log(entity.UserName);
+        }
+        
     }
 }
 

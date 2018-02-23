@@ -15,6 +15,18 @@ public class GlobalInit : MonoBehaviour {
     public static GlobalInit Instance;
 
     /// <summary>
+    /// 昵称 Key
+    /// </summary>
+    public const string MMO_NICKNAME = "MMO_NICKNAME";
+
+    /// <summary>
+    /// 密码 key
+    /// </summary>
+    public const string MMO_PWD = "MMO_PWD";
+
+    public const string WebAccountUrl = "http://localhost:9855/";
+
+    /// <summary>
     /// 玩家注册的昵称
     /// </summary>
     [HideInInspector]
