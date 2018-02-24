@@ -82,14 +82,17 @@ public class TestMMOMemory : MonoBehaviour {
         //    Debug.Log("访问账号服务器URL " + GlobalInit.WebAccountUrl + "api/account?id=100");
         //}
 
-        if (!NetWorkHttp.Instance.IsBusy)
-        {
-            JsonData jsonData = new JsonData();
-            jsonData["type"] = 0;//0 注册 1 登录
-            jsonData["UserName"] = "哈哈";
-            jsonData["Pwd"] = "213";
-            NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl + "api/account", PostCallBack,true,jsonData.ToJson());
-        }
+        //测试http post请求
+        //if (!NetWorkHttp.Instance.IsBusy)
+        //{
+        //    JsonData jsonData = new JsonData();
+        //    jsonData["type"] = 0;//0 注册 1 登录
+        //    jsonData["UserName"] = "哈哈";
+        //    jsonData["Pwd"] = "213";
+        //    NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl + "api/account", PostCallBack,true,jsonData.ToJson());
+        //}
+
+        NetWorkSocket.Instance.Connect("127.0.0.1",111);
 
     }
 
