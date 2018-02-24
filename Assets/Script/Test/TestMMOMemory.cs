@@ -75,14 +75,27 @@ public class TestMMOMemory : MonoBehaviour {
         //    Debug.Log(entity.Name);
         //}
 
-        NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl+"api/account?id=100",CallBack);
-        Debug.Log("访问账号服务器URL "+ GlobalInit.WebAccountUrl + "api/account?id=100");
+        //测试http get请求
+        //if (!NetWorkHttp.Instance.IsBusy)
+        //{
+        //    NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl + "api/account?id=100", CallBack);
+        //    Debug.Log("访问账号服务器URL " + GlobalInit.WebAccountUrl + "api/account?id=100");
+        //}
+
+        if (!NetWorkHttp.Instance.IsBusy)
+        {
+            JsonData jsonData = new JsonData();
+            jsonData["type"] = 0;//0 注册 1 登录
+            jsonData["UserName"] = "哈哈";
+            jsonData["Pwd"] = "213";
+            NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl + "api/account", PostCallBack,true,jsonData.ToJson());
+        }
+
     }
 
-    private void CallBack(NetWorkHttp.CallBackArgs obj)
+    private void GetCallBack(NetWorkHttp.CallBackArgs obj)
     {
-        Debug.Log(obj.Json);
-        if (obj.IsError)
+        if (obj.HasError)
         {
             Debug.Log("找不到用户");
         }
@@ -92,6 +105,23 @@ public class TestMMOMemory : MonoBehaviour {
             Debug.Log(entity.UserName);
         }
         
+    }
+
+    private void PostCallBack(NetWorkHttp.CallBackArgs obj)
+    {
+        if (obj.HasError)
+        {
+            Debug.Log("找不到用户");
+        }
+        else
+        {
+            RetValue ret = JsonMapper.ToObject<RetValue>(obj.Json);
+            if (!ret.HasError)
+            {
+                Debug.Log("用户编号= "+ret.RetData);
+            }
+        }
+
     }
 }
 
