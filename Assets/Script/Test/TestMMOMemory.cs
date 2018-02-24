@@ -92,8 +92,15 @@ public class TestMMOMemory : MonoBehaviour {
         //    NetWorkHttp.Instance.SendData(GlobalInit.WebAccountUrl + "api/account", PostCallBack,true,jsonData.ToJson());
         //}
 
+        //测试客户端与服务器的连接 和通信
         NetWorkSocket.Instance.Connect("127.0.0.1",111);
 
+        using (MMO_MemoryStream ms = new MMO_MemoryStream())
+        {
+            ms.WriteUTF8String("你好啊");
+
+            NetWorkSocket.Instance.SendMsg(ms.ToArray());
+        }
     }
 
     private void GetCallBack(NetWorkHttp.CallBackArgs obj)
