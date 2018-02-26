@@ -93,14 +93,40 @@ public class TestMMOMemory : MonoBehaviour {
         //}
 
         //测试客户端与服务器的连接 和通信
-        NetWorkSocket.Instance.Connect("127.0.0.1",111);
+        //NetWorkSocket.Instance.Connect("127.0.0.1",111);
 
-        using (MMO_MemoryStream ms = new MMO_MemoryStream())
-        {
-            ms.WriteUTF8String("你好啊");
+        //using (MMO_MemoryStream ms = new MMO_MemoryStream())
+        //{
+        //    ms.WriteUTF8String("你好啊");
 
-            NetWorkSocket.Instance.SendMsg(ms.ToArray());
-        }
+        //    NetWorkSocket.Instance.SendMsg(ms.ToArray());
+        //}
+
+        TestProto proto = new TestProto();
+        proto.Id = 1;
+        proto.Name = "测试";
+        proto.Type = 0;
+        proto.Price = 99.99f;
+
+        byte[] buffer = null;
+
+        //1、json 方式
+        //string json = JsonMapper.ToJson(proto);
+        //using (MMO_MemoryStream ms = new MMO_MemoryStream())
+        //{
+        //    ms.WriteUTF8String(json);
+        //    buffer = ms.ToArray();
+        //}
+        //Debug.Log("buffer = "+buffer.Length);
+
+        //2、自定义
+        buffer = proto.ToArray();
+        Debug.Log("buffer = "+buffer.Length);
+
+        TestProto proto2 = TestProto.GetProto(buffer);
+        Debug.Log(proto2.Name);
+
+        //自定义协议传输 相比Json传输 体积更小 而且json不能传输float类型的数据
     }
 
     private void GetCallBack(NetWorkHttp.CallBackArgs obj)
