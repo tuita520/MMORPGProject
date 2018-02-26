@@ -12,6 +12,10 @@ using System.Collections;
 /// </summary>
 public class GlobalInit : MonoBehaviour {
 
+    public delegate void OnReceiveProtoHandler(ushort protoCode, byte[] buffer);
+
+    public OnReceiveProtoHandler OnReceiveProto;
+
     public static GlobalInit Instance;
 
     /// <summary>

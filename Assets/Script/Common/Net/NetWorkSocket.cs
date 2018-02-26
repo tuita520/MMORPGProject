@@ -335,6 +335,11 @@ public class NetWorkSocket : MonoBehaviour
                             protoCode = ms.ReadUShort();
                             //将协议内容写入字节数组
                             ms.Read(protoContent,0,protoContent.Length);
+
+                            //观察者 分发协议
+                            EventDispatcher.Instance.Dispatch(protoCode,protoContent);
+
+                            GlobalInit.Instance.OnReceiveProto(protoCode,protoContent);
                         }
                     }
                     else

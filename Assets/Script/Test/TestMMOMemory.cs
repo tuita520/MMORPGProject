@@ -138,6 +138,7 @@ public class TestMMOMemory : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
+            //测试网络通信协议
             TestProto proto = new TestProto();
             proto.Id = 100;
             proto.Name = "额呵呵";
