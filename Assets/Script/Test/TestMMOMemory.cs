@@ -102,13 +102,13 @@ public class TestMMOMemory : MonoBehaviour {
         //    NetWorkSocket.Instance.SendMsg(ms.ToArray());
         //}
 
-        TestProto proto = new TestProto();
-        proto.Id = 1;
-        proto.Name = "测试";
-        proto.Type = 0;
-        proto.Price = 99.99f;
+        //TestProto proto = new TestProto();
+        //proto.Id = 1;
+        //proto.Name = "测试";
+        //proto.Type = 0;
+        //proto.Price = 99.99f;
 
-        byte[] buffer = null;
+        //byte[] buffer = null;
 
         //1、json 方式
         //string json = JsonMapper.ToJson(proto);
@@ -120,13 +120,32 @@ public class TestMMOMemory : MonoBehaviour {
         //Debug.Log("buffer = "+buffer.Length);
 
         //2、自定义
-        buffer = proto.ToArray();
-        Debug.Log("buffer = "+buffer.Length);
+        //buffer = proto.ToArray();
+        //Debug.Log("buffer = "+buffer.Length);
 
-        TestProto proto2 = TestProto.GetProto(buffer);
-        Debug.Log(proto2.Name);
+        //TestProto proto2 = TestProto.GetProto(buffer);
+        //Debug.Log(proto2.Name);
 
-        //自定义协议传输 相比Json传输 体积更小 而且json不能传输float类型的数据
+        //自定义协议传输 相比Json传输 体积更小 而且json不能传输float类型的数据 
+
+        NetWorkSocket.Instance.Connect("127.0.0.1", 111);
+        
+        
+
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            TestProto proto = new TestProto();
+            proto.Id = 100;
+            proto.Name = "额呵呵";
+            proto.Type = 10;
+            proto.Price = 99.99f;
+
+            NetWorkSocket.Instance.SendMsg(proto.ToArray());
+        }
     }
 
     private void GetCallBack(NetWorkHttp.CallBackArgs obj)

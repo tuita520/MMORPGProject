@@ -327,10 +327,14 @@ public class NetWorkSocket : MonoBehaviour
                     {
                         byte[] buffer = m_ReceiveQueue.Dequeue();
 
+                        ushort protoCode = 0;
+                        byte[] protoContent = new byte[buffer.Length-2];
                         using(MMO_MemoryStream ms = new MMO_MemoryStream(buffer))
                         {
-                            string msg = ms.ReadUTF8String();
-                            Debug.Log("接收的消息 "+msg);
+                            //协议编号
+                            protoCode = ms.ReadUShort();
+                            //将协议内容写入字节数组
+                            ms.Read(protoContent,0,protoContent.Length);
                         }
                     }
                     else

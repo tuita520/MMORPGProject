@@ -7,7 +7,10 @@
 using UnityEngine;
 using System.Collections;
 
-public struct TestProto {
+public struct TestProto :IProto
+{
+
+    public ushort ProtoCode{ get { return 10000; } }
 
     public int Id;
     public string Name;
@@ -18,6 +21,7 @@ public struct TestProto {
     {
         using(MMO_MemoryStream ms = new MMO_MemoryStream())
         {
+            ms.WriteUShort(ProtoCode);
             ms.WriteInt(Id);
             ms.WriteUTF8String(Name);
             ms.WriteInt(Type);
@@ -31,7 +35,7 @@ public struct TestProto {
     {
         TestProto proto = new TestProto();
 
-        using(MMO_MemoryStream ms = new MMO_MemoryStream())
+        using(MMO_MemoryStream ms = new MMO_MemoryStream(buffer))
         {
             proto.Id = ms.ReadInt();
             proto.Name = ms.ReadUTF8String();
