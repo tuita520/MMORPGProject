@@ -151,7 +151,7 @@ public class TestMMOMemory : MonoBehaviour {
             proto.Name = "额呵呵";
             proto.Type = 10;
             proto.Price = 99.99f;
-
+            
             NetWorkSocket.Instance.SendMsg(proto.ToArray());
         }
     }

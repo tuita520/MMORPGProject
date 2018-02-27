@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System;
 using System.Text;
 
+/// <summary>
+/// 网络传输Socket
+/// </summary>
 public class NetWorkSocket : MonoBehaviour
 {
 
@@ -42,6 +45,10 @@ public class NetWorkSocket : MonoBehaviour
 
     //检查队列的委托
     private Action m_CheckSendQueue;
+
+    //压缩数组的长度界限
+    private const int m_CompressLen = 200;
+
     #endregion
 
     #region 接收消息所需的变量
@@ -81,9 +88,7 @@ public class NetWorkSocket : MonoBehaviour
             m_Client.Connect(new IPEndPoint(IPAddress.Parse(ip), port));
             m_CheckSendQueue = OnCheckSendQueueCallBack;
 
-            Debug.Log("开始接收消息");
             ReceiveMsg();
-            Debug.Log("连接成功");
         }
         catch (System.Exception ex)
         {
@@ -120,10 +125,30 @@ public class NetWorkSocket : MonoBehaviour
     private byte[] MakeData(byte[] data)
     {
         byte[] retBuffer = null;
+
+        //1、对数据进行压缩检测
+        bool isCompress = data.Length > m_CompressLen ? true : false;
+        if (isCompress)
+        {
+            data = ZlibHelper.CompressBytes(data);
+        }
+
+        //2、先异或
+        data = SecurityUtil.Xor(data);
+
+        //3、计算Crc校验值
+        ushort crc = Crc16.CalculateCrc16(data);
+
         using (MMO_MemoryStream ms = new MMO_MemoryStream())
         {
-            ms.WriteUShort((ushort)(data.Length));
+            ms.WriteUShort((ushort)(data.Length + 3));
+
+            ms.WriteBool(isCompress);
+
+            ms.WriteUShort(crc);
+
             ms.Write(data, 0, data.Length);
+
             retBuffer = ms.ToArray();
         }
 
@@ -312,6 +337,8 @@ public class NetWorkSocket : MonoBehaviour
     }
     #endregion
 
+
+    #region Update 真正从队列中读取数据
     void Update()
     {
         #region 从队列中获取数据
@@ -325,20 +352,53 @@ public class NetWorkSocket : MonoBehaviour
                 {
                     if (m_ReceiveQueue.Count > 0)
                     {
+                        //得到队列中的数据包
                         byte[] buffer = m_ReceiveQueue.Dequeue();
 
-                        ushort protoCode = 0;
-                        byte[] protoContent = new byte[buffer.Length-2];
+                        //异或之后的数组
+                        byte[] bufferNew = new byte[buffer.Length - 3];
+
+                        bool isCompress = false;
+                        ushort crc = 0;
+
                         using(MMO_MemoryStream ms = new MMO_MemoryStream(buffer))
                         {
-                            //协议编号
-                            protoCode = ms.ReadUShort();
-                            //将协议内容写入字节数组
-                            ms.Read(protoContent,0,protoContent.Length);
-
-                            //观察者 分发协议
-                            EventDispatcher.Instance.Dispatch(protoCode,protoContent);
+                            isCompress = ms.ReadBool();
+                            crc = ms.ReadUShort();
+                            ms.Read(bufferNew, 0, bufferNew.Length);
+                            
                         }
+
+                        //1、CRC 计算
+                        int newCrc = Crc16.CalculateCrc16(bufferNew);
+                        if(newCrc == crc)
+                        {
+                            //异或得到原始数据
+                            bufferNew = SecurityUtil.Xor(bufferNew);
+
+                            if (isCompress)
+                            {
+                                bufferNew = ZlibHelper.DeCompressBytes(bufferNew);
+                            }
+
+                            ushort protoCode = 0;
+                            byte[] protoContent = new byte[bufferNew.Length - 2];
+                            using (MMO_MemoryStream ms = new MMO_MemoryStream(bufferNew))
+                            {
+                                //协议编号
+                                protoCode = ms.ReadUShort();
+                                //将协议内容写入字节数组
+                                ms.Read(protoContent, 0, protoContent.Length);
+
+                                //观察者 分发协议
+                                EventDispatcher.Instance.Dispatch(protoCode, protoContent);
+                            }
+                        }
+                        else
+                        {
+                            break;//校验失败
+                        }
+
                     }
                     else
                     {
@@ -356,7 +416,7 @@ public class NetWorkSocket : MonoBehaviour
         #endregion
 
     }
-
+    #endregion
 
     /// <summary>
     /// 用户退出网络

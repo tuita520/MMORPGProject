@@ -46,11 +46,7 @@ public class GameDataTableParser : IDisposable
         //------------------
         //第3步：xor解密
         //------------------
-        int iScaleLen = xorScale.Length;
-        for (int i = 0; i < buffer.Length; i++)
-        {
-            buffer[i] = (byte)(buffer[i] ^ xorScale[i % iScaleLen]);
-        }
+        buffer = SecurityUtil.Xor(buffer);
 
         //------------------
         //第4步：解析数据到数组
