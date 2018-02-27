@@ -30,6 +30,10 @@ public class GlobalInit : MonoBehaviour {
 
     public const string WebAccountUrl = "http://localhost:9855/";
 
+    public const string SocketIP = "127.0.0.1";
+
+    public const ushort Port = 111;
+
     /// <summary>
     /// 玩家注册的昵称
     /// </summary>

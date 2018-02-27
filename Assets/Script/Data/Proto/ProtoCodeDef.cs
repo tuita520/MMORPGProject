@@ -9,6 +9,8 @@
 /// </summary>
 public class ProtoCodeDef
 {
+    public const ushort Test = 10000;
+
     /// <summary>
     /// 客户端发送本地时间
     /// </summary>

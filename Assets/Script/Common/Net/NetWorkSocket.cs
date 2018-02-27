@@ -338,8 +338,6 @@ public class NetWorkSocket : MonoBehaviour
 
                             //观察者 分发协议
                             EventDispatcher.Instance.Dispatch(protoCode,protoContent);
-
-                            GlobalInit.Instance.OnReceiveProto(protoCode,protoContent);
                         }
                     }
                     else

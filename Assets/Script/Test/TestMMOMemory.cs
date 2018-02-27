@@ -128,10 +128,17 @@ public class TestMMOMemory : MonoBehaviour {
 
         //自定义协议传输 相比Json传输 体积更小 而且json不能传输float类型的数据 
 
-        NetWorkSocket.Instance.Connect("127.0.0.1", 111);
-        
-        
+        NetWorkSocket.Instance.Connect(GlobalInit.SocketIP, GlobalInit.Port);
 
+        EventDispatcher.Instance.AddEventListener(ProtoCodeDef.Test,OnTestCallBack);
+
+    }
+
+    private void OnTestCallBack(byte[] buffer)
+    {
+        Debug.Log("收到协议反馈");
+        TestProto proto = TestProto.GetProto(buffer);
+        Debug.Log(proto.Name);
     }
 
     void Update()

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 public class EventDispatcher:Singleton<EventDispatcher> {
 
     //委托原型
-    public delegate void OnActionHandler(params object[] param);
+    public delegate void OnActionHandler(byte[] buffer);
 
     //委托字典
     private Dictionary<ushort, List<OnActionHandler>> dic = new Dictionary<ushort, List<OnActionHandler>>();
